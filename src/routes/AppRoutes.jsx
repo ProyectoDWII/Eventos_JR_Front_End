@@ -26,6 +26,7 @@ import AdminDashboard from '../pages/Admin/AdminDashboard';
 import AdminUsuarios from '../pages/Admin/UsuariosPage';
 import AdminReportes from '../pages/Admin/ReportesPage';
 import NotFound from '../pages/Error/NotFound';
+import Showcase from '../pages/Showcase';
 
 export default function AppRoutes() {
   return (
@@ -36,6 +37,7 @@ export default function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/ui-showcase" element={<Showcase />} />
         
         {/* Protected Cliente Routes */}
         <Route path="/cliente" element={<PrivateRoute allowedRoles={['cliente']} />}>
