@@ -4,7 +4,8 @@ import { useAuth } from '../../../context/AuthContext';
 import { useTheme } from '../../../context/ThemeContext';
 
 /**
- * Responsive, Adaptive and Minimalist Navbar Component
+ * Responsive, Adaptive and Premium Navbar Component.
+ * Integrates authentication state, theme toggling, dashboard toggles, and smooth home navigation.
  */
 export default function Navbar({ onMenuToggle }) {
   const { state: authState, setState: setAuthState } = useAuth();
@@ -12,6 +13,7 @@ export default function Navbar({ onMenuToggle }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isDashboard = location.pathname.startsWith('/cliente') || 
                       location.pathname.startsWith('/fotografo') || 
@@ -21,6 +23,18 @@ export default function Navbar({ onMenuToggle }) {
     setAuthState({ isAuthenticated: false, user: null });
     setProfileOpen(false);
     navigate('/');
+  };
+
+  const handleNavClick = (sectionId) => {
+    setMobileMenuOpen(false);
+    if (window.location.pathname !== '/') {
+      navigate(`/#${sectionId}`);
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   // Helper to get active page title in dashboard
@@ -42,9 +56,9 @@ export default function Navbar({ onMenuToggle }) {
       case 'admin':
         return 'bg-red-500/10 text-red-500 border border-red-500/20';
       case 'fotografo':
-        return 'bg-secondary/10 text-secondary border border-secondary/20';
+        return 'bg-cyan-500/10 text-cyan-500 border border-cyan-500/20';
       default:
-        return 'bg-primary/10 text-primary border border-primary/20';
+        return 'bg-indigo-500/10 text-indigo-550 border border-indigo-500/20';
     }
   };
 
@@ -68,7 +82,7 @@ export default function Navbar({ onMenuToggle }) {
           {isDashboard && (
             <button
               onClick={onMenuToggle}
-              className="lg:hidden p-2 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="lg:hidden p-2 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               aria-label="Abrir Menú"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -77,16 +91,26 @@ export default function Navbar({ onMenuToggle }) {
             </button>
           )}
 
+          {/* Hamburger button (visible on public in mobile only) */}
+          {!isDashboard && (
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+              aria-label="Abrir Menú de Navegación"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.75 6.75h14.5M4.75 12h14.5m-14.5 5.25h14.5" />
+              </svg>
+            </button>
+          )}
+
           {/* Logo or Title */}
           {!isDashboard ? (
-            <Link to="/" className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-gradient-to-tr from-primary to-secondary text-white shadow-md">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-                </svg>
-              </div>
-              <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <Link to="/" className="flex items-center gap-2 group">
+              <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-cyan-500 text-white font-black text-sm shadow-sm group-hover:scale-105 transition-transform duration-200">
+                JR
+              </span>
+              <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-zinc-900 to-zinc-700 dark:from-zinc-100 dark:to-zinc-350 bg-clip-text text-transparent group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-250">
                 Eventos JR
               </span>
             </Link>
@@ -99,10 +123,11 @@ export default function Navbar({ onMenuToggle }) {
 
         {/* Center / Navigation Links (Public View only) */}
         {!isDashboard && (
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-600 dark:text-zinc-300">
-            <Link to="/" className="hover:text-primary transition-colors duration-200">Inicio</Link>
-            <a href="#roles" className="hover:text-primary transition-colors duration-200">Roles</a>
-            <a href="#contacto" className="hover:text-primary transition-colors duration-200">Contacto</a>
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-300">
+            <button onClick={() => handleNavClick('hero')} className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer">Inicio</button>
+            <button onClick={() => handleNavClick('servicios')} className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer">Servicios</button>
+            <button onClick={() => handleNavClick('testimonios')} className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer">Testimonios</button>
+            <button onClick={() => handleNavClick('contacto')} className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer">Contacto</button>
           </div>
         )}
 
@@ -112,7 +137,7 @@ export default function Navbar({ onMenuToggle }) {
           {/* Dark Mode Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-2 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
             aria-label="Alternar Tema"
           >
             {theme === 'dark' ? (
@@ -132,9 +157,9 @@ export default function Navbar({ onMenuToggle }) {
               {/* Profile Button */}
               <button
                 onClick={() => setProfileOpen(!profileOpen)}
-                className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-secondary text-white font-bold text-xs flex items-center justify-center shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-650 to-cyan-500 text-white font-bold text-xs flex items-center justify-center shadow-sm">
                   {userInitials}
                 </div>
                 <span className="hidden sm:block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
@@ -148,10 +173,9 @@ export default function Navbar({ onMenuToggle }) {
               {/* Profile Dropdown */}
               {profileOpen && (
                 <>
-                  {/* Overlay click to close */}
                   <div className="fixed inset-0 z-10" onClick={() => setProfileOpen(false)}></div>
                   
-                  <div className="absolute right-0 mt-2 w-52 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-zinc-900 p-2 shadow-2xl z-20 transition-all duration-200 animate-in fade-in slide-in-from-top-2">
+                  <div className="absolute right-0 mt-2 w-52 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-zinc-900 p-2 shadow-2xl z-20 animate-in fade-in slide-in-from-top-2">
                     <div className="px-3 py-2.5 border-b border-zinc-100 dark:border-zinc-800/60">
                       <p className="text-xs font-semibold text-zinc-400">Sesión iniciada</p>
                       <p className="text-sm font-bold truncate mt-0.5">{authState.user?.name}</p>
@@ -171,7 +195,7 @@ export default function Navbar({ onMenuToggle }) {
                       )}
                       <button
                         onClick={handleLogout}
-                        className="flex w-full items-center px-3 py-2 text-xs font-semibold text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"
+                        className="flex w-full items-center px-3 py-2 text-xs font-semibold text-red-500 rounded-lg hover:bg-red-500/10 transition-colors cursor-pointer"
                       >
                         Cerrar Sesión
                       </button>
@@ -190,7 +214,7 @@ export default function Navbar({ onMenuToggle }) {
               </Link>
               <Link
                 to="/register"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 transition-all shadow-md shadow-primary/10"
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-indigo-600 to-cyan-500 text-white hover:opacity-90 transition-all shadow-md shadow-indigo-650/10"
               >
                 Registrarse
               </Link>
@@ -199,6 +223,39 @@ export default function Navbar({ onMenuToggle }) {
 
         </div>
       </div>
+
+      {/* Mobile Navigation Dropdown Menu (Public View only) */}
+      {!isDashboard && mobileMenuOpen && (
+        <>
+          <div className="fixed inset-0 top-16 z-30 bg-zinc-950/20 dark:bg-zinc-950/50" onClick={() => setMobileMenuOpen(false)}></div>
+          <div className="absolute top-16 left-0 right-0 z-40 bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-850 p-4 space-y-2 animate-in slide-in-from-top duration-200">
+            <button 
+              onClick={() => handleNavClick('hero')} 
+              className="block w-full text-left px-3 py-2 rounded-xl text-sm font-semibold text-zinc-700 hover:text-indigo-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:text-indigo-400 dark:hover:bg-zinc-900 transition"
+            >
+              Inicio
+            </button>
+            <button 
+              onClick={() => handleNavClick('servicios')} 
+              className="block w-full text-left px-3 py-2 rounded-xl text-sm font-semibold text-zinc-700 hover:text-indigo-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:text-indigo-400 dark:hover:bg-zinc-900 transition"
+            >
+              Servicios
+            </button>
+            <button 
+              onClick={() => handleNavClick('testimonios')} 
+              className="block w-full text-left px-3 py-2 rounded-xl text-sm font-semibold text-zinc-700 hover:text-indigo-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:text-indigo-400 dark:hover:bg-zinc-900 transition"
+            >
+              Testimonios
+            </button>
+            <button 
+              onClick={() => handleNavClick('contacto')} 
+              className="block w-full text-left px-3 py-2 rounded-xl text-sm font-semibold text-zinc-700 hover:text-indigo-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:text-indigo-400 dark:hover:bg-zinc-900 transition"
+            >
+              Contacto
+            </button>
+          </div>
+        </>
+      )}
     </nav>
   );
 }
