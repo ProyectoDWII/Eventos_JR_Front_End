@@ -4,6 +4,7 @@ import Layout from '../components/common/Layout/Layout';
 import Landing from '../pages/Landing/Landing';
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
+import AvisoPrivacidadPage from '../pages/Landing/AvisoPrivacidadPage';
 import PrivateRoute from './PrivateRoute';
 import Unauthorized from '../pages/Auth/Unauthorized';
 
@@ -38,6 +39,7 @@ export default function AppRoutes() {
         <Route path="/register" element={<Register />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/ui-showcase" element={<Showcase />} />
+        <Route path="/aviso-privacidad" element={<AvisoPrivacidadPage />} />
         
         {/* Protected Cliente Routes */}
         <Route path="/cliente" element={<PrivateRoute allowedRoles={['cliente']} />}>
