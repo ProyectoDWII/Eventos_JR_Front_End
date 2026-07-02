@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
+import PwaInstallBanner from '../UI/PwaInstallBanner';
 
 /**
  * Dynamic Layout Manager Component
@@ -35,6 +36,9 @@ export default function Layout() {
             </div>
           </main>
         </div>
+        
+        {/* Banner de instalación PWA */}
+        <PwaInstallBanner />
       </div>
     );
   }
@@ -54,6 +58,10 @@ export default function Layout() {
 
       {/* Public Footer */}
       <Footer />
+      
+      {/* Banner de instalación PWA */}
+      <PwaInstallBanner />
     </div>
   );
 }
+
