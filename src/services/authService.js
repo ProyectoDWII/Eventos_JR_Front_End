@@ -35,6 +35,14 @@ export const authService = {
   getProfile: async () => {
     const response = await api.get('/client/profile');
     return response.data;
+  },
+
+  /**
+   * logout - Cierra la sesión en el servidor y limpia la cookie HttpOnly
+   */
+  logout: async () => {
+    const response = await api.post('/auth/logout');
+    return response.data;
   }
 };
 
