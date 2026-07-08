@@ -68,5 +68,17 @@ export default defineConfig({
       }
     })
   ],
+  server: {
+    headers: {
+      'X-Frame-Options': 'DENY',
+      'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 http://localhost:5000 http://localhost:5173 ws://localhost:5173 ws://127.0.0.1:5173;"
+    }
+  },
+  preview: {
+    headers: {
+      'X-Frame-Options': 'DENY',
+      'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 http://localhost:5000 http://localhost:5173 ws://localhost:5173 ws://127.0.0.1:5173;"
+    }
+  }
 })
 
