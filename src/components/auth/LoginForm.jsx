@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 import { useAuth } from '../../context/AuthContext';
 import AvisoPrivacidad from '../common/Privacy/AvisoPrivacidad';
 
@@ -18,13 +19,17 @@ export default function LoginForm() {
     e.preventDefault();
     const newErrors = {};
 
-    if (!email) {
+    // Sanitización preventiva contra XSS
+    const sanitizedEmail = DOMPurify.sanitize(email);
+    const sanitizedPassword = DOMPurify.sanitize(password);
+
+    if (!sanitizedEmail) {
       newErrors.email = 'El correo electrónico es requerido.';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+    } else if (!/\S+@\S+\.\S+/.test(sanitizedEmail)) {
       newErrors.email = 'El formato del correo es inválido.';
     }
 
-    if (!password) {
+    if (!sanitizedPassword) {
       newErrors.password = 'La contraseña es requerida.';
     }
 
@@ -42,7 +47,7 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
-      const user = await loginUser(email, password);
+      const user = await loginUser(sanitizedEmail, sanitizedPassword);
       setLoading(false);
       navigate(`/${user.role}/dashboard`);
     } catch (error) {

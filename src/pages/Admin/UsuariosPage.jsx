@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DOMPurify from 'dompurify';
 import adminService from '../../services/adminService';
 
 /**
@@ -10,6 +11,7 @@ export default function UsuariosPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Cargar usuarios al montar la vista
   const loadUsers = async () => {
@@ -86,6 +88,17 @@ export default function UsuariosPage() {
     }
   };
 
+  const sanitizedSearchTerm = DOMPurify.sanitize(searchTerm);
+
+  const filteredUsers = users.filter((user) => {
+    const term = sanitizedSearchTerm.toLowerCase().trim();
+    if (!term) return true;
+    return (
+      user.name?.toLowerCase().includes(term) || 
+      user.email?.toLowerCase().includes(term)
+    );
+  });
+
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       
@@ -132,6 +145,30 @@ export default function UsuariosPage() {
 
       {/* Main Table / List Container */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 rounded-3xl shadow-xl overflow-hidden">
+        
+        {/* Search Bar with XSS Sanitization */}
+        <div className="p-5 border-b border-zinc-150 dark:border-zinc-800/60 bg-zinc-50/50 dark:bg-zinc-950/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="relative flex-1 max-w-md">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Buscar por nombre o correo..."
+              className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-zinc-250 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-150"
+            />
+            <span className="absolute left-3.5 top-2.5 text-zinc-400">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.2} stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m21-21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.602 10.602Z" />
+              </svg>
+            </span>
+          </div>
+          {searchTerm && (
+            <div className="text-xs text-zinc-500 dark:text-zinc-450 leading-none">
+              Búsqueda sanitizada (XSS): <span className="font-mono text-indigo-600 dark:text-indigo-400 font-semibold">{sanitizedSearchTerm}</span>
+            </div>
+          )}
+        </div>
+
         {loading ? (
           <div className="p-12 flex flex-col items-center justify-center gap-3">
             <div className="w-8 h-8 rounded-full border-2 border-indigo-600/20 border-t-indigo-650 animate-spin" />
@@ -147,6 +184,16 @@ export default function UsuariosPage() {
             <h3 className="text-sm font-bold text-zinc-800 dark:text-zinc-200">No se encontraron usuarios</h3>
             <p className="text-xs text-zinc-500">No existen cuentas registradas en la base de datos de MongoDB.</p>
           </div>
+        ) : filteredUsers.length === 0 ? (
+          <div className="p-12 text-center space-y-2">
+            <div className="w-12 h-12 rounded-2xl bg-zinc-50 dark:bg-zinc-800 text-zinc-400 flex items-center justify-center mx-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m21-21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.602 10.602Z" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-bold text-zinc-800 dark:text-zinc-200">Sin coincidencias</h3>
+            <p className="text-xs text-zinc-500">No se encontraron usuarios que coincidan con la búsqueda.</p>
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
@@ -160,7 +207,7 @@ export default function UsuariosPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/60">
-                {users.map((user) => {
+                {filteredUsers.map((user) => {
                   const displayRole = user.role === 'admin' ? 'Fotógrafo / Admin' : 'Cliente';
                   const isDeleted = user.deletedAt !== null || user.status === 'inactive';
                   
