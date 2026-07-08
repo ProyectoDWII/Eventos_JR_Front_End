@@ -1,15 +1,18 @@
 import React from 'react';
+import DevelopmentPlaceholder from '../../components/common/UI/DevelopmentPlaceholder';
 
 /**
- * PersonalizarPage Component
+ * PersonalizarPage - Vista para personalizar paquetes
  */
 export default function PersonalizarPage() {
   return (
-    <div className="p-6 border rounded-xl shadow-lg bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 transition duration-300 hover:shadow-xl">
-      <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">PersonalizarPage</h3>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">
-        Placeholder view or component for the PersonalizarPage feature. Add your custom Tailwind styling and logic here.
-      </p>
-    </div>
+    <DevelopmentPlaceholder
+      title="Personalizar Paquete"
+      description="Arma un paquete a la medida agregando servicios individuales o ajustando horas de cobertura fotográfica, impresiones, asistentes de video y locaciones extras."
+      requiredEndpoints={[
+        'POST /api/packages/custom (Generar cotización de paquete a medida)',
+        'GET /api/services/categories (Filtrar catálogo por categoría)'
+      ]}
+    />
   );
 }

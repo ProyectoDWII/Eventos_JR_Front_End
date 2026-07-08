@@ -60,7 +60,7 @@ export default function AppRoutes() {
         </Route>
         
         {/* Protected Admin Routes */}
-        <Route path="/admin" element={<PrivateRoute allowedRoles={['admin']} />}>
+        <Route path="/admin" element={<PrivateRoute allowedRoles={['admin', 'fotografo']} />}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="usuarios" element={<AdminUsuarios />} />
           <Route path="reportes" element={<AdminReportes />} />

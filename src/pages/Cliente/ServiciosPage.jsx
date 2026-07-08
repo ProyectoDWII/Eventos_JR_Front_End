@@ -1,15 +1,18 @@
 import React from 'react';
+import DevelopmentPlaceholder from '../../components/common/UI/DevelopmentPlaceholder';
 
 /**
- * ServiciosPage Component
+ * ServiciosPage - Vista de servicios para clientes
  */
 export default function ServiciosPage() {
   return (
-    <div className="p-6 border rounded-xl shadow-lg bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 transition duration-300 hover:shadow-xl">
-      <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">ServiciosPage</h3>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">
-        Placeholder view or component for the ServiciosPage feature. Add your custom Tailwind styling and logic here.
-      </p>
-    </div>
+    <DevelopmentPlaceholder
+      title="Catálogo de Servicios"
+      description="Visualiza y conoce en detalle los servicios que ofrece el fotógrafo principal (cobertura fotográfica, catering, música, decoración, etc.) para armar tu paquete ideal."
+      requiredEndpoints={[
+        'GET /api/services (Obtener catálogo completo)',
+        'GET /api/services/:id (Ver detalle del servicio)'
+      ]}
+    />
   );
 }
