@@ -1,37 +1,51 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
+import { useAuth } from '../../context/AuthContext';
 import AvisoPrivacidad from '../common/Privacy/AvisoPrivacidad';
 
 export default function RegisterForm() {
+  const { registerUser } = useAuth();
+  const navigate = useNavigate();
+
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [rol, setRol] = useState('cliente');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
+  
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
-    if (!nombre.trim()) {
+    // Sanitización preventiva contra XSS
+    const sanitizedNombre = DOMPurify.sanitize(nombre);
+    const sanitizedEmail = DOMPurify.sanitize(email);
+    const sanitizedPhone = DOMPurify.sanitize(phoneNumber);
+    const sanitizedPassword = DOMPurify.sanitize(password);
+
+    if (!sanitizedNombre.trim()) {
       newErrors.nombre = 'El nombre completo es requerido.';
     }
 
-    if (!email) {
+    if (!sanitizedEmail) {
       newErrors.email = 'El correo electrónico es requerido.';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+    } else if (!/\S+@\S+\.\S+/.test(sanitizedEmail)) {
       newErrors.email = 'El formato del correo es inválido.';
     }
 
-    if (!password) {
+    if (!sanitizedPassword) {
       newErrors.password = 'La contraseña es requerida.';
-    } else if (password.length < 6) {
+    } else if (sanitizedPassword.length < 6) {
       newErrors.password = 'La contraseña debe tener al menos 6 caracteres.';
     }
 
-    if (password !== confirmPassword) {
+    if (sanitizedPassword !== DOMPurify.sanitize(confirmPassword)) {
       newErrors.confirmPassword = 'Las contraseñas no coinciden.';
     }
 
@@ -45,11 +59,26 @@ export default function RegisterForm() {
       return;
     }
 
-    // Clear errors and submit
     setErrors({});
-    setSubmitted(true);
-    // Simulate API call
-    console.log('Registro exitoso:', { nombre, email, rol, acceptedPrivacy });
+    setLoading(true);
+
+    try {
+      const user = await registerUser({
+        name: sanitizedNombre,
+        email: sanitizedEmail,
+        password: sanitizedPassword,
+        role: rol,
+        phoneNumber: sanitizedPhone
+      });
+      setLoading(false);
+      navigate(`/${user.role}/dashboard`);
+    } catch (error) {
+      setLoading(false);
+      const serverMessage = error.response?.data?.message || error.response?.data?.error;
+      setErrors({
+        general: serverMessage || 'Error al crear la cuenta. Es posible que el correo ya esté registrado.'
+      });
+    }
   };
 
   return (
@@ -72,142 +101,153 @@ export default function RegisterForm() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Regístrate para solicitar o proveer servicios</p>
       </div>
 
-      {submitted ? (
-        <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-255 dark:border-emerald-900/50 rounded-2xl p-6 text-center shadow-sm">
-          <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 mb-4">
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-            </svg>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* General error feedback */}
+        {errors.general && (
+          <div className="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/50 text-xs text-red-600 dark:text-red-400 font-semibold leading-relaxed">
+            {errors.general}
           </div>
-          <h3 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100">¡Registro Simulado con Éxito!</h3>
-          <p className="text-sm text-emerald-755 dark:text-emerald-400 mt-2">
-            Se ha creado la cuenta y registrado el consentimiento conforme a la LGPDPPSO.
-          </p>
-          <button 
-            onClick={() => {
-              setSubmitted(false);
-              setNombre('');
-              setEmail('');
-              setPassword('');
-              setConfirmPassword('');
-              setAcceptedPrivacy(false);
-            }}
-            className="mt-4 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition"
-          >
-            Registrar otro usuario
-          </button>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-semibold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider mb-1">
-              Nombre Completo
-            </label>
-            <input
-              type="text"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              placeholder="Juan Pérez"
-              className={`w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-550 focus:ring-2 focus:outline-none transition duration-150 ${
-                errors.nombre 
-                  ? 'border-red-500 focus:ring-red-500' 
-                  : 'border-zinc-250 dark:border-zinc-750 focus:ring-indigo-500'
-              }`}
-            />
-            {errors.nombre && (
-              <p className="text-xs text-red-655 dark:text-red-400 mt-1 font-medium">{errors.nombre}</p>
-            )}
-          </div>
+        )}
 
-          <div>
-            <label className="block text-xs font-semibold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider mb-1">
-              Correo Electrónico
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@correo.com"
-              className={`w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-550 focus:ring-2 focus:outline-none transition duration-150 ${
-                errors.email 
-                  ? 'border-red-500 focus:ring-red-500' 
-                  : 'border-zinc-250 dark:border-zinc-750 focus:ring-indigo-500'
-              }`}
-            />
-            {errors.email && (
-              <p className="text-xs text-red-655 dark:text-red-400 mt-1 font-medium">{errors.email}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider mb-1">
-              Tipo de Usuario (Rol)
-            </label>
-            <select
-              value={rol}
-              onChange={(e) => setRol(e.target.value)}
-              className="w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-200 border-zinc-250 dark:border-zinc-750 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-150"
-            >
-              <option value="cliente">Cliente (Busco organizar mi evento)</option>
-              <option value="fotografo">Fotógrafo (Quiero ofrecer mis servicios)</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider mb-1">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className={`w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-550 focus:ring-2 focus:outline-none transition duration-150 ${
-                errors.password 
-                  ? 'border-red-500 focus:ring-red-500' 
-                  : 'border-zinc-250 dark:border-zinc-750 focus:ring-indigo-500'
-              }`}
-            />
-            {errors.password && (
-              <p className="text-xs text-red-655 dark:text-red-400 mt-1 font-medium">{errors.password}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider mb-1">
-              Confirmar Contraseña
-            </label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="••••••••"
-              className={`w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-550 focus:ring-2 focus:outline-none transition duration-150 ${
-                errors.confirmPassword 
-                  ? 'border-red-500 focus:ring-red-500' 
-                  : 'border-zinc-250 dark:border-zinc-750 focus:ring-indigo-500'
-              }`}
-            />
-            {errors.confirmPassword && (
-              <p className="text-xs text-red-655 dark:text-red-400 mt-1 font-medium">{errors.confirmPassword}</p>
-            )}
-          </div>
-
-          {/* Privacy Notice Component */}
-          <AvisoPrivacidad 
-            checked={acceptedPrivacy} 
-            onChange={(e) => setAcceptedPrivacy(e.target.checked)} 
-            error={errors.privacy}
+        {/* Name Input */}
+        <div>
+          <label className="block text-xs font-semibold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider mb-1">
+            Nombre Completo
+          </label>
+          <input
+            type="text"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            placeholder="Juan Pérez"
+            className={`w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:outline-none transition duration-150 ${
+              errors.nombre 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-zinc-250 dark:border-zinc-750 focus:ring-indigo-500'
+            }`}
           />
+          {errors.nombre && (
+            <p className="text-xs text-red-655 dark:text-red-400 mt-1 font-medium">{errors.nombre}</p>
+          )}
+        </div>
 
-          <button
-            type="submit"
-            className="w-full py-3 px-4 font-semibold text-white bg-indigo-600 hover:bg-indigo-750 rounded-xl transition duration-200 shadow-md shadow-indigo-650/10 hover:shadow-indigo-650/20 active:scale-98 cursor-pointer"
+        {/* Email Input */}
+        <div>
+          <label className="block text-xs font-semibold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider mb-1">
+            Correo Electrónico
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="tu@correo.com"
+            className={`w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:outline-none transition duration-150 ${
+              errors.email 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-zinc-250 dark:border-zinc-750 focus:ring-indigo-500'
+            }`}
+          />
+          {errors.email && (
+            <p className="text-xs text-red-655 dark:text-red-400 mt-1 font-medium">{errors.email}</p>
+          )}
+        </div>
+
+        {/* Phone Number Input */}
+        <div>
+          <label className="block text-xs font-semibold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider mb-1">
+            Número de Teléfono (Opcional)
+          </label>
+          <input
+            type="tel"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            placeholder="5512345678"
+            className="w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-100 border-zinc-250 dark:border-zinc-750 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-150"
+          />
+        </div>
+
+        {/* Role Selector */}
+        <div>
+          <label className="block text-xs font-semibold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider mb-1">
+            Tipo de Usuario (Rol)
+          </label>
+          <select
+            value={rol}
+            onChange={(e) => setRol(e.target.value)}
+            className="w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-200 border-zinc-250 dark:border-zinc-750 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-150"
           >
-            Registrarse
-          </button>
-        </form>
-      )}
+            <option value="cliente">Cliente (Busco organizar mi evento)</option>
+            <option value="fotografo">Fotógrafo (Quiero ofrecer mis servicios)</option>
+          </select>
+        </div>
+
+        {/* Password Input */}
+        <div>
+          <label className="block text-xs font-semibold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider mb-1">
+            Contraseña
+          </label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+            className={`w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:outline-none transition duration-150 ${
+              errors.password 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-zinc-250 dark:border-zinc-750 focus:ring-indigo-500'
+            }`}
+          />
+          {errors.password && (
+            <p className="text-xs text-red-655 dark:text-red-400 mt-1 font-medium">{errors.password}</p>
+          )}
+        </div>
+
+        {/* Confirm Password Input */}
+        <div>
+          <label className="block text-xs font-semibold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider mb-1">
+            Confirmar Contraseña
+          </label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="••••••••"
+            className={`w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:outline-none transition duration-150 ${
+              errors.confirmPassword 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-zinc-250 dark:border-zinc-750 focus:ring-indigo-500'
+            }`}
+          />
+          {errors.confirmPassword && (
+            <p className="text-xs text-red-655 dark:text-red-400 mt-1 font-medium">{errors.confirmPassword}</p>
+          )}
+        </div>
+
+        {/* Privacy Notice Component */}
+        <AvisoPrivacidad 
+          checked={acceptedPrivacy} 
+          onChange={(e) => setAcceptedPrivacy(e.target.checked)} 
+          error={errors.privacy}
+        />
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-3 px-4 font-semibold text-white bg-indigo-600 hover:bg-indigo-750 rounded-xl transition duration-200 shadow-md shadow-indigo-650/10 hover:shadow-indigo-650/20 active:scale-98 disabled:opacity-55 cursor-pointer"
+        >
+          {loading ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Creando cuenta...
+            </span>
+          ) : (
+            'Registrarse'
+          )}
+        </button>
+      </form>
     </div>
   );
 }

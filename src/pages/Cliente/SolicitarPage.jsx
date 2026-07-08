@@ -1,15 +1,18 @@
 import React from 'react';
+import DevelopmentPlaceholder from '../../components/common/UI/DevelopmentPlaceholder';
 
 /**
- * SolicitarPage Component
+ * SolicitarPage - Vista para crear solicitudes de cobertura
  */
 export default function SolicitarPage() {
   return (
-    <div className="p-6 border rounded-xl shadow-lg bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 transition duration-300 hover:shadow-xl">
-      <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">SolicitarPage</h3>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">
-        Placeholder view or component for the SolicitarPage feature. Add your custom Tailwind styling and logic here.
-      </p>
-    </div>
+    <DevelopmentPlaceholder
+      title="Solicitar Cobertura de Evento"
+      description="Reserva la fecha de tu evento (graduación, boda, fiesta) seleccionando un paquete, la locación del evento y especificando detalles del contrato de cobertura."
+      requiredEndpoints={[
+        'POST /api/applications (Crear nueva solicitud de reserva)',
+        'GET /api/applications/check-availability (Comprobar disponibilidad de fecha)'
+      ]}
+    />
   );
 }

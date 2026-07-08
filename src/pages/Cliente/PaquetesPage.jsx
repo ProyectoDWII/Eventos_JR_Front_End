@@ -1,15 +1,18 @@
 import React from 'react';
+import DevelopmentPlaceholder from '../../components/common/UI/DevelopmentPlaceholder';
 
 /**
- * PaquetesPage Component
+ * PaquetesPage - Vista de paquetes para clientes
  */
 export default function PaquetesPage() {
   return (
-    <div className="p-6 border rounded-xl shadow-lg bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 transition duration-300 hover:shadow-xl">
-      <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">PaquetesPage</h3>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">
-        Placeholder view or component for the PaquetesPage feature. Add your custom Tailwind styling and logic here.
-      </p>
-    </div>
+    <DevelopmentPlaceholder
+      title="Paquetes de Cobertura"
+      description="Explora los paquetes preestablecidos de fotografía y video (Básico, Premium, VIP) con tarifas integradas, servicios incluidos y opciones de personalización."
+      requiredEndpoints={[
+        'GET /api/packages (Obtener paquetes disponibles)',
+        'GET /api/packages/:id (Ver detalle del paquete)'
+      ]}
+    />
   );
 }
