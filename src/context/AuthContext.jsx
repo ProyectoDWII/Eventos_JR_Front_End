@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import authService from '../services/authService';
 
 // Create the Context
 const AuthContext = createContext(undefined);
@@ -7,11 +8,142 @@ const AuthContext = createContext(undefined);
  * AuthContext Provider Component
  */
 export function AuthContextProvider({ children }) {
-  const [state, setState] = useState(null);
+  const [state, setState] = useState(() => {
+    const token = localStorage.getItem('token');
+    const userJson = localStorage.getItem('user');
+    
+    if (token && userJson) {
+      try {
+        const user = JSON.parse(userJson);
+        return {
+          isAuthenticated: true,
+          user,
+          token,
+          loading: false
+        };
+      } catch (e) {
+        console.error('Error parseando sesión previa:', e);
+      }
+    }
+    
+    return {
+      isAuthenticated: false,
+      user: null,
+      token: null,
+      loading: false
+    };
+  });
+
+  // Efecto para verificar si el token almacenado sigue siendo válido
+  useEffect(() => {
+    const verifyToken = async () => {
+      if (state.token && state.user?.role === 'cliente') {
+        try {
+          // Intentamos cargar el perfil para validar la sesión actual
+          await authService.getProfile();
+        } catch (error) {
+          console.warn('Sesión expirada o token inválido en servidor, cerrando sesión.');
+          logoutUser();
+        }
+      }
+    };
+
+    verifyToken();
+  }, []);
+
+  const loginUser = async (email, password) => {
+    setState((prev) => ({ ...prev, loading: true }));
+    try {
+      const response = await authService.login({ email, password });
+      const { token, user } = response;
+      
+      // Mapeamos los roles del backend a los roles del frontend:
+      // 'client' -> 'cliente'
+      // 'admin'  -> 'fotografo' (El administrador del sistema es el fotógrafo)
+      let frontendRole = user.role;
+      if (user.role === 'client') {
+        frontendRole = 'cliente';
+      } else if (user.role === 'admin') {
+        frontendRole = 'fotografo';
+      }
+
+      const frontendUser = {
+        ...user,
+        role: frontendRole
+      };
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(frontendUser));
+
+      setState({
+        isAuthenticated: true,
+        user: frontendUser,
+        token,
+        loading: false
+      });
+      
+      return frontendUser;
+    } catch (error) {
+      setState((prev) => ({ ...prev, loading: false }));
+      throw error;
+    }
+  };
+
+  const registerUser = async (userData) => {
+    setState((prev) => ({ ...prev, loading: true }));
+    try {
+      const response = await authService.register(userData);
+      const { token, user } = response;
+
+      // Mapeamos los roles del backend a los roles del frontend:
+      // 'client' -> 'cliente'
+      // 'admin'  -> 'fotografo'
+      let frontendRole = user.role;
+      if (user.role === 'client') {
+        frontendRole = 'cliente';
+      } else if (user.role === 'admin') {
+        frontendRole = 'fotografo';
+      }
+
+      const frontendUser = {
+        ...user,
+        role: frontendRole
+      };
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(frontendUser));
+
+      setState({
+        isAuthenticated: true,
+        user: frontendUser,
+        token,
+        loading: false
+      });
+
+      return frontendUser;
+    } catch (error) {
+      setState((prev) => ({ ...prev, loading: false }));
+      throw error;
+    }
+  };
+
+  const logoutUser = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setState({
+      isAuthenticated: false,
+      user: null,
+      token: null,
+      loading: false
+    });
+  };
 
   const value = {
     state,
-    setState
+    setState,
+    loginUser,
+    registerUser,
+    logoutUser
   };
 
   return (

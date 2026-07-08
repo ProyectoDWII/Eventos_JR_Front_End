@@ -1,15 +1,18 @@
 import React from 'react';
+import DevelopmentPlaceholder from '../../components/common/UI/DevelopmentPlaceholder';
 
 /**
- * MisSolicitudesPage Component
+ * MisSolicitudesPage - Listado de solicitudes hechas por el cliente
  */
 export default function MisSolicitudesPage() {
   return (
-    <div className="p-6 border rounded-xl shadow-lg bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 transition duration-300 hover:shadow-xl">
-      <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">MisSolicitudesPage</h3>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">
-        Placeholder view or component for the MisSolicitudesPage feature. Add your custom Tailwind styling and logic here.
-      </p>
-    </div>
+    <DevelopmentPlaceholder
+      title="Mis Solicitudes y Reservas"
+      description="Consulta el estado de tus solicitudes enviadas (pendiente, aprobado, rechazado), descarga contratos asociados a tus fechas reservadas y realiza firmas electrónicas."
+      requiredEndpoints={[
+        'GET /api/applications/my-requests (Ver mis solicitudes de eventos)',
+        'GET /api/contracts/my-contracts (Obtener mis contratos para firma)'
+      ]}
+    />
   );
 }

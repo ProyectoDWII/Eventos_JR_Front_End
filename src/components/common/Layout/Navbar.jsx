@@ -8,7 +8,7 @@ import { useTheme } from '../../../context/ThemeContext';
  * Integrates authentication state, theme toggling, dashboard toggles, and smooth home navigation.
  */
 export default function Navbar({ onMenuToggle }) {
-  const { state: authState, setState: setAuthState } = useAuth();
+  const { state: authState, logoutUser } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function Navbar({ onMenuToggle }) {
                       location.pathname.startsWith('/admin');
 
   const handleLogout = () => {
-    setAuthState({ isAuthenticated: false, user: null });
+    logoutUser();
     setProfileOpen(false);
     navigate('/');
   };

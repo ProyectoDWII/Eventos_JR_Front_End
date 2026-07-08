@@ -1,15 +1,19 @@
 import React from 'react';
+import DevelopmentPlaceholder from '../../components/common/UI/DevelopmentPlaceholder';
 
 /**
- * SolicitudesPage Component
+ * SolicitudesPage - Panel de solicitudes de eventos para el fotógrafo
  */
 export default function SolicitudesPage() {
   return (
-    <div className="p-6 border rounded-xl shadow-lg bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 transition duration-300 hover:shadow-xl">
-      <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">SolicitudesPage</h3>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">
-        Placeholder view or component for the SolicitudesPage feature. Add your custom Tailwind styling and logic here.
-      </p>
-    </div>
+    <DevelopmentPlaceholder
+      title="Gestión de Solicitudes y Agenda"
+      description="Visualiza todas las reservas de eventos pendientes enviadas por tus clientes. Acepta o rechaza fechas y genera contratos digitales automáticamente al autorizar coberturas."
+      requiredEndpoints={[
+        'GET /api/admin/applications (Ver todas las solicitudes del sistema)',
+        'PATCH /api/admin/applications/:id/status (Aprobar o rechazar solicitud de fecha)',
+        'POST /api/admin/contracts (Generar contrato asociado a la reserva aprobada)'
+      ]}
+    />
   );
 }

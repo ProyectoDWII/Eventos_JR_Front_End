@@ -4,18 +4,17 @@ import { useAuth } from '../../context/AuthContext';
 import AvisoPrivacidad from '../common/Privacy/AvisoPrivacidad';
 
 export default function LoginForm() {
-  const { setState: setAuthState } = useAuth();
+  const { loginUser } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('cliente');
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
@@ -42,23 +41,17 @@ export default function LoginForm() {
     setErrors({});
     setLoading(true);
 
-    // Simulate login API delay
-    setTimeout(() => {
-      const userName = email.split('@')[0];
-      const displayName = userName.charAt(0).toUpperCase() + userName.slice(1);
-      
-      setAuthState({
-        isAuthenticated: true,
-        user: {
-          name: displayName || 'Usuario Demo',
-          email: email,
-          role: role
-        }
-      });
-      
+    try {
+      const user = await loginUser(email, password);
       setLoading(false);
-      navigate(`/${role}/dashboard`);
-    }, 800);
+      navigate(`/${user.role}/dashboard`);
+    } catch (error) {
+      setLoading(false);
+      const serverMessage = error.response?.data?.message || error.response?.data?.error;
+      setErrors({
+        general: serverMessage || 'Correo electrónico o contraseña incorrectos. Por favor, intente de nuevo.'
+      });
+    }
   };
 
   return (
@@ -77,9 +70,16 @@ export default function LoginForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* General error feedback */}
+        {errors.general && (
+          <div className="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/50 text-xs text-red-600 dark:text-red-400 font-semibold leading-relaxed">
+            {errors.general}
+          </div>
+        )}
+
         {/* Email input */}
         <div>
-          <label className="block text-xs font-semibold text-zinc-550 dark:text-zinc-400 uppercase tracking-wider mb-1" htmlFor="email">
+          <label className="block text-xs font-semibold text-zinc-555 dark:text-zinc-400 uppercase tracking-wider mb-1" htmlFor="email">
             Correo Electrónico
           </label>
           <input
@@ -95,13 +95,13 @@ export default function LoginForm() {
             }`}
           />
           {errors.email && (
-            <p className="text-xs text-red-650 dark:text-red-400 mt-1 font-medium">{errors.email}</p>
+            <p className="text-xs text-red-655 dark:text-red-400 mt-1 font-medium">{errors.email}</p>
           )}
         </div>
 
         {/* Password input */}
         <div>
-          <label className="block text-xs font-semibold text-zinc-550 dark:text-zinc-400 uppercase tracking-wider mb-1" htmlFor="password">
+          <label className="block text-xs font-semibold text-zinc-555 dark:text-zinc-400 uppercase tracking-wider mb-1" htmlFor="password">
             Contraseña
           </label>
           <input
@@ -119,29 +119,6 @@ export default function LoginForm() {
           {errors.password && (
             <p className="text-xs text-red-655 dark:text-red-400 mt-1 font-medium">{errors.password}</p>
           )}
-        </div>
-
-        {/* Role selector (For demo/testing purposes) */}
-        <div>
-          <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wide mb-2">
-            Rol de Acceso (Demostración)
-          </label>
-          <div className="grid grid-cols-3 gap-2">
-            {['cliente', 'fotografo', 'admin'].map((roleOption) => (
-              <button
-                key={roleOption}
-                type="button"
-                onClick={() => setRole(roleOption)}
-                className={`py-2 rounded-xl text-xs font-bold border capitalize transition-all cursor-pointer ${
-                  role === roleOption
-                    ? 'bg-indigo-50 border-indigo-550 text-indigo-650 dark:bg-indigo-950/40 dark:border-indigo-400 dark:text-indigo-405'
-                    : 'border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-850 text-zinc-650 dark:text-zinc-400'
-                }`}
-              >
-                {roleOption === 'fotografo' ? 'Fotógrafo' : roleOption}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Privacy Notice Component */}
