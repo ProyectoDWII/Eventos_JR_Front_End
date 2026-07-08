@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 import { useAuth } from '../../context/AuthContext';
 import AvisoPrivacidad from '../common/Privacy/AvisoPrivacidad';
 
@@ -22,23 +23,29 @@ export default function RegisterForm() {
     e.preventDefault();
     const newErrors = {};
 
-    if (!nombre.trim()) {
+    // Sanitización preventiva contra XSS
+    const sanitizedNombre = DOMPurify.sanitize(nombre);
+    const sanitizedEmail = DOMPurify.sanitize(email);
+    const sanitizedPhone = DOMPurify.sanitize(phoneNumber);
+    const sanitizedPassword = DOMPurify.sanitize(password);
+
+    if (!sanitizedNombre.trim()) {
       newErrors.nombre = 'El nombre completo es requerido.';
     }
 
-    if (!email) {
+    if (!sanitizedEmail) {
       newErrors.email = 'El correo electrónico es requerido.';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+    } else if (!/\S+@\S+\.\S+/.test(sanitizedEmail)) {
       newErrors.email = 'El formato del correo es inválido.';
     }
 
-    if (!password) {
+    if (!sanitizedPassword) {
       newErrors.password = 'La contraseña es requerida.';
-    } else if (password.length < 6) {
+    } else if (sanitizedPassword.length < 6) {
       newErrors.password = 'La contraseña debe tener al menos 6 caracteres.';
     }
 
-    if (password !== confirmPassword) {
+    if (sanitizedPassword !== DOMPurify.sanitize(confirmPassword)) {
       newErrors.confirmPassword = 'Las contraseñas no coinciden.';
     }
 
@@ -57,11 +64,11 @@ export default function RegisterForm() {
 
     try {
       const user = await registerUser({
-        name: nombre,
-        email,
-        password,
+        name: sanitizedNombre,
+        email: sanitizedEmail,
+        password: sanitizedPassword,
         role: rol,
-        phoneNumber
+        phoneNumber: sanitizedPhone
       });
       setLoading(false);
       navigate(`/${user.role}/dashboard`);
