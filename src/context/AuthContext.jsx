@@ -9,10 +9,8 @@ const AuthContext = createContext(undefined);
  */
 export function AuthContextProvider({ children }) {
   const [state, setState] = useState(() => {
-    const token = localStorage.getItem('token');
     const userJson = localStorage.getItem('user');
 
-    if (token && userJson) {
       try {
         const user = JSON.parse(userJson);
         return {
@@ -34,10 +32,10 @@ export function AuthContextProvider({ children }) {
     };
   });
 
-  // Efecto para verificar si el token almacenado sigue siendo válido
+  // Efecto para verificar si la sesión sigue siendo válida (con cookies HttpOnly)
   useEffect(() => {
     const verifyToken = async () => {
-      if (state.token && state.user?.role === 'cliente') {
+      if (state.isAuthenticated) {
         try {
           // Intentamos cargar el perfil para validar la sesión actual
           await authService.getProfile();
@@ -45,6 +43,7 @@ export function AuthContextProvider({ children }) {
           console.warn(
             'Sesión expirada o token inválido en servidor, cerrando sesión.'
           );
+     
           logoutUser();
         }
       }
@@ -57,8 +56,8 @@ export function AuthContextProvider({ children }) {
     setState((prev) => ({ ...prev, loading: true }));
     try {
       const response = await authService.login({ email, password });
-      const { token, user } = response;
-
+      const { user } = response;
+      
       // Mapeamos los roles del backend a los roles del frontend:
       // 'client' -> 'cliente'
       // 'admin'  -> 'fotografo' (El administrador del sistema es el fotógrafo)
@@ -74,14 +73,12 @@ export function AuthContextProvider({ children }) {
         role: frontendRole,
       };
 
-      localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(frontendUser));
 
       setState({
         isAuthenticated: true,
         user: frontendUser,
-        token,
-        loading: false,
+        loading: false
       });
 
       return frontendUser;
@@ -95,7 +92,7 @@ export function AuthContextProvider({ children }) {
     setState((prev) => ({ ...prev, loading: true }));
     try {
       const response = await authService.register(userData);
-      const { token, user } = response;
+      const { user } = response;
 
       // Mapeamos los roles del backend a los roles del frontend:
       // 'client' -> 'cliente'
@@ -112,14 +109,12 @@ export function AuthContextProvider({ children }) {
         role: frontendRole,
       };
 
-      localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(frontendUser));
 
       setState({
         isAuthenticated: true,
         user: frontendUser,
-        token,
-        loading: false,
+        loading: false
       });
 
       return frontendUser;
@@ -129,14 +124,20 @@ export function AuthContextProvider({ children }) {
     }
   };
 
-  function logoutUser() {
-    localStorage.removeItem('token');
+  const logoutUser = async () => {
+    try {
+      // Llamamos al servicio de logout para limpiar la cookie del backend
+      await authService.logout();
+    } catch (e) {
+      console.warn('Error llamando a logout en servidor:', e);
+    }
+    
+    // Limpiamos los datos locales en el cliente
     localStorage.removeItem('user');
     setState({
       isAuthenticated: false,
       user: null,
-      token: null,
-      loading: false,
+      loading: false
     });
   }
 

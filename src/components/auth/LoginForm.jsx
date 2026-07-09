@@ -31,6 +31,8 @@ export default function LoginForm() {
 
     if (!sanitizedPassword) {
       newErrors.password = 'La contraseña es requerida.';
+    } else if (sanitizedPassword.length < 8) {
+      newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
     }
 
     // Critical block: check if privacy consent checkbox is checked
