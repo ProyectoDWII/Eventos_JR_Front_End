@@ -40,9 +40,12 @@ export default function AppRoutes() {
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/ui-showcase" element={<Showcase />} />
         <Route path="/aviso-privacidad" element={<AvisoPrivacidadPage />} />
-        
+
         {/* Protected Cliente Routes */}
-        <Route path="/cliente" element={<PrivateRoute allowedRoles={['cliente']} />}>
+        <Route
+          path="/cliente"
+          element={<PrivateRoute allowedRoles={['cliente']} />}
+        >
           <Route path="dashboard" element={<ClienteDashboard />} />
           <Route path="servicios" element={<ClienteServicios />} />
           <Route path="paquetes" element={<ClientePaquetes />} />
@@ -50,17 +53,23 @@ export default function AppRoutes() {
           <Route path="mis-solicitudes" element={<ClienteMisSolicitudes />} />
           <Route path="personalizar" element={<ClientePersonalizar />} />
         </Route>
-        
+
         {/* Protected Fotógrafo Routes */}
-        <Route path="/fotografo" element={<PrivateRoute allowedRoles={['fotografo']} />}>
+        <Route
+          path="/fotografo"
+          element={<PrivateRoute allowedRoles={['fotografo']} />}
+        >
           <Route path="dashboard" element={<FotografoDashboard />} />
           <Route path="servicios" element={<FotografoServicios />} />
           <Route path="paquetes" element={<FotografoPaquetes />} />
           <Route path="solicitudes" element={<FotografoSolicitudes />} />
         </Route>
-        
+
         {/* Protected Admin Routes */}
-        <Route path="/admin" element={<PrivateRoute allowedRoles={['admin', 'fotografo']} />}>
+        <Route
+          path="/admin"
+          element={<PrivateRoute allowedRoles={['admin', 'fotografo']} />}
+        >
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="usuarios" element={<AdminUsuarios />} />
           <Route path="reportes" element={<AdminReportes />} />

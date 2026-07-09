@@ -11,7 +11,7 @@ export default function SolicitarPage() {
       description="Reserva la fecha de tu evento (graduación, boda, fiesta) seleccionando un paquete, la locación del evento y especificando detalles del contrato de cobertura."
       requiredEndpoints={[
         'POST /api/applications (Crear nueva solicitud de reserva)',
-        'GET /api/applications/check-availability (Comprobar disponibilidad de fecha)'
+        'GET /api/applications/check-availability (Comprobar disponibilidad de fecha)',
       ]}
     />
   );

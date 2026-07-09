@@ -47,7 +47,7 @@ export const adminService = {
   restore: async (id) => {
     const response = await api.patch(`/admin/users/${id}/restore`);
     return response.data;
-  }
+  },
 };
 
 export default adminService;

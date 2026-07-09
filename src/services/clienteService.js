@@ -20,7 +20,7 @@ export const clienteService = {
   delete: async (id) => {
     const response = await api.delete(`/cliente/${id}`);
     return response.data;
-  }
+  },
 };
 
 export default clienteService;

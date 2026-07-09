@@ -31,11 +31,10 @@ export default function FotografoDashboard() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
-      
       {/* Welcome Card */}
       <div className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-indigo-950 rounded-3xl p-6 md:p-8 text-white shadow-xl border border-zinc-850 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
-        
+
         <div className="relative z-10 space-y-4 max-w-2xl">
           <span className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold tracking-wide uppercase border border-white/10">
             Administrador de Eventos JR
@@ -44,17 +43,19 @@ export default function FotografoDashboard() {
             ¡Hola, {userName}!
           </h1>
           <p className="text-sm text-zinc-300 font-medium leading-relaxed">
-            Bienvenido a tu panel unificado de control. Como administrador y fotógrafo principal, tienes acceso completo al registro de usuarios de MongoDB y a la gestión del portafolio.
+            Bienvenido a tu panel unificado de control. Como administrador y
+            fotógrafo principal, tienes acceso completo al registro de usuarios
+            de MongoDB y a la gestión del portafolio.
           </p>
           <div className="pt-2 text-xs text-indigo-400 font-mono">
-            Administrador activo: <span className="underline text-zinc-300">{userEmail}</span>
+            Administrador activo:{' '}
+            <span className="underline text-zinc-300">{userEmail}</span>
           </div>
         </div>
       </div>
 
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        
         {/* Metric 1: Total Users (Dynamic) */}
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/50 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
           <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">
@@ -130,20 +131,32 @@ export default function FotografoDashboard() {
             Ajustar paquetes →
           </Link>
         </div>
-
       </div>
 
       {/* Quick Tips */}
       <div className="p-5 rounded-3xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/40 text-xs text-amber-800 dark:text-amber-300 leading-relaxed flex items-start gap-3">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 5.25v.008h.008v-.008H12ZM11.25 9h.008v.008h-.008V9Zm11.25 3A9.75 9.75 0 1 1 2.25 12a9.75 9.75 0 0 1 19.5 0Z" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+          stroke="currentColor"
+          className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 18v-5.25m0 5.25v.008h.008v-.008H12ZM11.25 9h.008v.008h-.008V9Zm11.25 3A9.75 9.75 0 1 1 2.25 12a9.75 9.75 0 0 1 19.5 0Z"
+          />
         </svg>
         <div>
           <span className="font-bold block mb-0.5">Nota de Integración:</span>
-          Los contadores de solicitudes, servicios y paquetes muestran datos simulados porque el backend de Express aún no tiene desarrollados los endpoints HTTP para interactuar con dichas bases de datos. La lista de usuarios es 100% real y activa en MongoDB.
+          Los contadores de solicitudes, servicios y paquetes muestran datos
+          simulados porque el backend de Express aún no tiene desarrollados los
+          endpoints HTTP para interactuar con dichas bases de datos. La lista de
+          usuarios es 100% real y activa en MongoDB.
         </div>
       </div>
-
     </div>
   );
 }

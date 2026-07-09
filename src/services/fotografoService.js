@@ -20,7 +20,7 @@ export const fotografoService = {
   delete: async (id) => {
     const response = await api.delete(`/fotografo/${id}`);
     return response.data;
-  }
+  },
 };
 
 export default fotografoService;

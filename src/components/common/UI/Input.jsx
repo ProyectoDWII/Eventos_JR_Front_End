@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * Reusable Form Input Component
- * 
+ *
  * @param {Object} props
  * @param {string} [props.label] - Label text displayed above the input
  * @param {string} [props.error] - Error message displayed below the input (activates error styling)

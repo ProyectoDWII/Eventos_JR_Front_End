@@ -12,7 +12,7 @@ export default function ServiciosPage() {
       requiredEndpoints={[
         'POST /api/admin/services (Crear nuevo servicio de catálogo)',
         'PUT /api/admin/services/:id (Editar servicio existente)',
-        'DELETE /api/admin/services/:id (Eliminar servicio del catálogo)'
+        'DELETE /api/admin/services/:id (Eliminar servicio del catálogo)',
       ]}
     />
   );

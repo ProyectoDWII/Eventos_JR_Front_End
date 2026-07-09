@@ -12,7 +12,7 @@ export default function PaquetesPage() {
       requiredEndpoints={[
         'POST /api/admin/packages (Crear nuevo paquete preestablecido)',
         'PUT /api/admin/packages/:id (Editar estructura del paquete)',
-        'DELETE /api/admin/packages/:id (Dar de baja paquete promocional)'
+        'DELETE /api/admin/packages/:id (Dar de baja paquete promocional)',
       ]}
     />
   );

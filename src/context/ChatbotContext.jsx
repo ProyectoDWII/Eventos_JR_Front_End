@@ -11,13 +11,11 @@ export function ChatbotContextProvider({ children }) {
 
   const value = {
     state,
-    setState
+    setState,
   };
 
   return (
-    <ChatbotContext.Provider value={value}>
-      {children}
-    </ChatbotContext.Provider>
+    <ChatbotContext.Provider value={value}>{children}</ChatbotContext.Provider>
   );
 }
 
