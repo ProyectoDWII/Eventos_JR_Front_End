@@ -43,8 +43,7 @@ export default function RegisterForm() {
       newErrors.password = 'La contraseña es requerida.';
     } else if (sanitizedPassword.length < 8) {
       newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
-    } else if (sanitizedPassword.length > 128) {
-      newErrors.password = 'La contraseña no puede exceder los 128 caracteres.';
+
     }
 
     if (sanitizedPassword !== DOMPurify.sanitize(confirmPassword)) {
