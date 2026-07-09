@@ -12,7 +12,7 @@ export default function ReportesPage() {
       requiredEndpoints={[
         'GET /api/admin/reports/sales (Estadísticas financieras de ventas)',
         'GET /api/admin/reports/conversion (Métricas de reservas y solicitudes)',
-        'GET /api/admin/reports/popular-services (Servicios de mayor demanda)'
+        'GET /api/admin/reports/popular-services (Servicios de mayor demanda)',
       ]}
     />
   );

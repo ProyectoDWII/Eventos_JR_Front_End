@@ -20,7 +20,7 @@ export const chatService = {
   delete: async (id) => {
     const response = await api.delete(`/chat/${id}`);
     return response.data;
-  }
+  },
 };
 
 export default chatService;

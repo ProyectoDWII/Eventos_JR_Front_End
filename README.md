@@ -1,4 +1,6 @@
-# React + Vite
+# Eventos JR - Frontend
+
+[![CI Frontend Eventos JR](https://github.com/ProyectoDWII/Eventos_JR_Front_End/actions/workflows/ci-frontend.yml/badge.svg)](https://github.com/ProyectoDWII/Eventos_JR_Front_End/actions/workflows/ci-frontend.yml)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

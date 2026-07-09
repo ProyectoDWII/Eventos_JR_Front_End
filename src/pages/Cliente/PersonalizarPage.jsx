@@ -11,7 +11,7 @@ export default function PersonalizarPage() {
       description="Arma un paquete a la medida agregando servicios individuales o ajustando horas de cobertura fotográfica, impresiones, asistentes de video y locaciones extras."
       requiredEndpoints={[
         'POST /api/packages/custom (Generar cotización de paquete a medida)',
-        'GET /api/services/categories (Filtrar catálogo por categoría)'
+        'GET /api/services/categories (Filtrar catálogo por categoría)',
       ]}
     />
   );

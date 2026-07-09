@@ -34,11 +34,15 @@ export default function PwaInstallBanner() {
 
     // If already in standalone mode, don't show
     if (window.matchMedia('(display-mode: standalone)').matches) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsVisible(false);
     }
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener(
+        'beforeinstallprompt',
+        handleBeforeInstallPrompt
+      );
       window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, []);
@@ -69,7 +73,6 @@ export default function PwaInstallBanner() {
   return (
     <div className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:max-w-md z-50 animate-in slide-in-from-bottom-5 duration-300">
       <div className="p-5 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        
         {/* Left Section: Icon & Info */}
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-500 text-white font-black flex items-center justify-center shrink-0 shadow-md shadow-indigo-500/10">
@@ -80,7 +83,8 @@ export default function PwaInstallBanner() {
               Instalar Eventos JR
             </h4>
             <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 leading-relaxed">
-              Disfruta de acceso directo, mejor rendimiento y soporte offline sin consumir almacenamiento.
+              Disfruta de acceso directo, mejor rendimiento y soporte offline
+              sin consumir almacenamiento.
             </p>
           </div>
         </div>
@@ -100,7 +104,6 @@ export default function PwaInstallBanner() {
             Instalar
           </button>
         </div>
-
       </div>
     </div>
   );

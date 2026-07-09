@@ -29,11 +29,13 @@ export default function Footer() {
                 Eventos JR
               </span>
               <p className="text-xs text-zinc-400 mt-1 dark:text-zinc-500">
-                Tu socio en la captura y organización de los momentos más especiales.
+                Tu socio en la captura y organización de los momentos más
+                especiales.
               </p>
             </div>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
-              Organización integral de eventos y servicios de fotografía profesional con altos estándares de calidad y protección de datos.
+              Organización integral de eventos y servicios de fotografía
+              profesional con altos estándares de calidad y protección de datos.
             </p>
           </div>
 
@@ -44,7 +46,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <button 
+                <button
                   onClick={() => handleScrollTo('hero')}
                   className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-150 cursor-pointer"
                 >
@@ -52,7 +54,7 @@ export default function Footer() {
                 </button>
               </li>
               <li>
-                <button 
+                <button
                   onClick={() => handleScrollTo('servicios')}
                   className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-150 cursor-pointer"
                 >
@@ -60,7 +62,7 @@ export default function Footer() {
                 </button>
               </li>
               <li>
-                <button 
+                <button
                   onClick={() => handleScrollTo('contacto')}
                   className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-150 cursor-pointer"
                 >
@@ -77,20 +79,24 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link 
-                  to="/aviso-privacidad" 
+                <Link
+                  to="/aviso-privacidad"
                   className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 hover:underline transition-colors duration-150"
                 >
                   Aviso de Privacidad Integral
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-150">
+                <a
+                  href="#"
+                  className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-150"
+                >
                   Términos de Servicio
                 </a>
               </li>
               <li className="text-xs text-zinc-400 dark:text-zinc-500 leading-relaxed max-w-xs pt-1 border-t border-zinc-100 dark:border-zinc-900">
-                Garantizamos la protección y confidencialidad de tus datos de conformidad con la <strong>LGPDPPSO</strong>.
+                Garantizamos la protección y confidencialidad de tus datos de
+                conformidad con la <strong>LGPDPPSO</strong>.
               </li>
             </ul>
           </div>
@@ -100,7 +106,10 @@ export default function Footer() {
         <div className="mt-12 pt-6 border-t border-zinc-200/50 dark:border-zinc-900/50 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400 dark:text-zinc-500">
           <p>&copy; {currentYear} Eventos JR. Todos los derechos reservados.</p>
           <div className="flex gap-4">
-            <a href="mailto:soporte@eventosjr.com" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-150">
+            <a
+              href="mailto:soporte@eventosjr.com"
+              className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-150"
+            >
               Soporte
             </a>
             <span>•</span>

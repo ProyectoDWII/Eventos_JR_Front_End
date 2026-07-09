@@ -1,5 +1,5 @@
 /* Tailwind imports */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-primary: var(--color-primary);

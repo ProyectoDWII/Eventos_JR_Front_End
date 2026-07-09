@@ -1,10 +1,10 @@
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import { AuthContextProvider } from './context/AuthContext'
-import { ChatbotContextProvider } from './context/ChatbotContext'
-import { NotificacionesContextProvider } from './context/NotificacionesContext'
-import { ThemeContextProvider } from './context/ThemeContext'
-import AppRoutes from './routes/AppRoutes'
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthContextProvider } from './context/AuthContext';
+import { ChatbotContextProvider } from './context/ChatbotContext';
+import { NotificacionesContextProvider } from './context/NotificacionesContext';
+import { ThemeContextProvider } from './context/ThemeContext';
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         </AuthContextProvider>
       </ThemeContextProvider>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

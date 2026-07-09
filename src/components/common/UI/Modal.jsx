@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 /**
  * Reusable Overlay Modal Component
- * 
+ *
  * @param {Object} props
  * @param {boolean} props.isOpen - Dictates visibility of the modal
  * @param {function} props.onClose - Triggers closing the modal
@@ -21,7 +21,7 @@ export default function Modal({
   size = 'md',
   closeOnOverlay = true,
   closeOnEsc = true,
-  children
+  children,
 }) {
   // Listen for ESC keypress to close modal
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function Modal({
   const sizeStyles = {
     sm: 'max-w-md w-full',
     md: 'max-w-lg w-full',
-    lg: 'max-w-3xl w-full'
+    lg: 'max-w-3xl w-full',
   };
 
   const handleOverlayClick = (e) => {
@@ -72,8 +72,19 @@ export default function Modal({
             className="p-1 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
             aria-label="Cerrar modal"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-5 h-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>

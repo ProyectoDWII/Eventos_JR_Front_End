@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function PrivateRoute({ allowedRoles }) {
   const { state } = useAuth();
-  
+
   if (!state?.isAuthenticated) {
     return <Navigate to="/login" replace />;
   }

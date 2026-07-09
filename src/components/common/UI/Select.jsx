@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * Reusable Dropdown Selector Component
- * 
+ *
  * @param {Object} props
  * @param {string} [props.label] - Label text displayed above the select field
  * @param {Array<{value: string|number, label: string}>} props.options - Option items list
@@ -57,7 +57,11 @@ export default function Select({
           {...props}
         >
           {options.map((opt) => (
-            <option key={opt.value} value={opt.value} className="bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50">
+            <option
+              key={opt.value}
+              value={opt.value}
+              className="bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50"
+            >
               {opt.label || opt.value}
             </option>
           ))}
@@ -65,8 +69,19 @@ export default function Select({
 
         {/* Custom Chevron Indicator overlay */}
         <span className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-zinc-400 pointer-events-none">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2.5}
+            stroke="currentColor"
+            className="w-4 h-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m19.5 8.25-7.5 7.5-7.5-7.5"
+            />
           </svg>
         </span>
       </div>

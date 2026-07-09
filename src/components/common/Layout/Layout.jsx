@@ -14,9 +14,10 @@ export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Detect dashboard paths
-  const isDashboard = location.pathname.startsWith('/cliente') || 
-                      location.pathname.startsWith('/fotografo') || 
-                      location.pathname.startsWith('/admin');
+  const isDashboard =
+    location.pathname.startsWith('/cliente') ||
+    location.pathname.startsWith('/fotografo') ||
+    location.pathname.startsWith('/admin');
 
   if (isDashboard) {
     return (
@@ -36,7 +37,7 @@ export default function Layout() {
             </div>
           </main>
         </div>
-        
+
         {/* Banner de instalación PWA */}
         <PwaInstallBanner />
       </div>
@@ -58,10 +59,9 @@ export default function Layout() {
 
       {/* Public Footer */}
       <Footer />
-      
+
       {/* Banner de instalación PWA */}
       <PwaInstallBanner />
     </div>
   );
 }
-

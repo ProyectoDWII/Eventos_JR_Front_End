@@ -11,7 +11,7 @@ export default function PaquetesPage() {
       description="Explora los paquetes preestablecidos de fotografía y video (Básico, Premium, VIP) con tarifas integradas, servicios incluidos y opciones de personalización."
       requiredEndpoints={[
         'GET /api/packages (Obtener paquetes disponibles)',
-        'GET /api/packages/:id (Ver detalle del paquete)'
+        'GET /api/packages/:id (Ver detalle del paquete)',
       ]}
     />
   );

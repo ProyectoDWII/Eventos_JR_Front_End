@@ -20,7 +20,7 @@ export const solicitudService = {
   delete: async (id) => {
     const response = await api.delete(`/solicitud/${id}`);
     return response.data;
-  }
+  },
 };
 
 export default solicitudService;

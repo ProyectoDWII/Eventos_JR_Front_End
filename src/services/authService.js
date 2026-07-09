@@ -24,7 +24,7 @@ export const authService = {
       email: userData.email,
       password: userData.password,
       role: apiRole,
-      phoneNumber: userData.phoneNumber
+      phoneNumber: userData.phoneNumber,
     });
     return response.data; // Retorna { token, user }
   },
@@ -35,7 +35,7 @@ export const authService = {
   getProfile: async () => {
     const response = await api.get('/client/profile');
     return response.data;
-  }
+  },
 };
 
 export default authService;
