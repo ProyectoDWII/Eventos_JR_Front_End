@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * Reusable Circular Progress Indicator (Spinner)
- * 
+ *
  * @param {Object} props
  * @param {'sm'|'md'|'lg'|'xl'} [props.size='md'] - Dimensions size of the spinner
  * @param {'primary'|'secondary'|'white'} [props.color='primary'] - Core theme coloring
@@ -19,14 +19,14 @@ export default function Spinner({
     sm: 'w-4 h-4',
     md: 'w-6 h-6',
     lg: 'w-8 h-8',
-    xl: 'w-12 h-12'
+    xl: 'w-12 h-12',
   };
 
   // Color styles mapping
   const colorStyles = {
     primary: 'text-primary',
     secondary: 'text-secondary',
-    white: 'text-white'
+    white: 'text-white',
   };
 
   return (

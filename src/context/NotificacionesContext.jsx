@@ -11,7 +11,7 @@ export function NotificacionesContextProvider({ children }) {
 
   const value = {
     state,
-    setState
+    setState,
   };
 
   return (
@@ -27,7 +27,9 @@ export function NotificacionesContextProvider({ children }) {
 export function useNotificaciones() {
   const context = useContext(NotificacionesContext);
   if (context === undefined) {
-    throw new Error('useNotificaciones must be used within a NotificacionesContextProvider');
+    throw new Error(
+      'useNotificaciones must be used within a NotificacionesContextProvider'
+    );
   }
   return context;
 }

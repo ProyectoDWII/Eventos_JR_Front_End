@@ -9,7 +9,10 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="relative py-20 lg:py-32 overflow-hidden bg-zinc-50 dark:bg-zinc-950 transition duration-300">
+    <section
+      id="hero"
+      className="relative py-20 lg:py-32 overflow-hidden bg-zinc-50 dark:bg-zinc-950 transition duration-300"
+    >
       {/* Decorative background grid and shapes */}
       <div className="absolute inset-0 z-0 opacity-30 dark:opacity-20 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-400 rounded-full filter blur-[100px]" />
@@ -21,16 +24,17 @@ export default function Hero() {
           <span className="w-1.5 h-1.5 rounded-full bg-indigo-650 dark:bg-indigo-400 animate-pulse" />
           Planificación y Fotografía de Eventos
         </span>
-        
+
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-zinc-900 dark:text-zinc-50 max-w-4xl mx-auto leading-none">
           Hacemos de tus Momentos Especiales{' '}
           <span className="bg-gradient-to-r from-indigo-600 via-purple-500 to-cyan-500 bg-clip-text text-transparent">
             Recuerdos Eternos
           </span>
         </h1>
-        
+
         <p className="text-zinc-500 dark:text-zinc-400 mt-6 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-          Coordinación profesional de bodas, quince años y eventos especiales. Fotografía artística de alta definición para capturar cada emoción.
+          Coordinación profesional de bodas, quince años y eventos especiales.
+          Fotografía artística de alta definición para capturar cada emoción.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">

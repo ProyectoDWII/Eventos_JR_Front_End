@@ -11,7 +11,7 @@ export default function MisSolicitudesPage() {
       description="Consulta el estado de tus solicitudes enviadas (pendiente, aprobado, rechazado), descarga contratos asociados a tus fechas reservadas y realiza firmas electrónicas."
       requiredEndpoints={[
         'GET /api/applications/my-requests (Ver mis solicitudes de eventos)',
-        'GET /api/contracts/my-contracts (Obtener mis contratos para firma)'
+        'GET /api/contracts/my-contracts (Obtener mis contratos para firma)',
       ]}
     />
   );

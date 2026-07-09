@@ -20,7 +20,7 @@ export const noticiasService = {
   delete: async (id) => {
     const response = await api.delete(`/noticias/${id}`);
     return response.data;
-  }
+  },
 };
 
 export default noticiasService;

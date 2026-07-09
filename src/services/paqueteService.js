@@ -20,7 +20,7 @@ export const paqueteService = {
   delete: async (id) => {
     const response = await api.delete(`/paquete/${id}`);
     return response.data;
-  }
+  },
 };
 
 export default paqueteService;

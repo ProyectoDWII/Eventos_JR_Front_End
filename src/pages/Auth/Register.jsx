@@ -8,8 +8,8 @@ export default function Register() {
       <RegisterForm />
       <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
         ¿Ya tienes una cuenta?{' '}
-        <Link 
-          to="/login" 
+        <Link
+          to="/login"
           className="text-indigo-655 dark:text-indigo-400 font-semibold hover:underline transition duration-150"
         >
           Inicia sesión aquí

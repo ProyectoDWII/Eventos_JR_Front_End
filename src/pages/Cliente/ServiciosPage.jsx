@@ -11,7 +11,7 @@ export default function ServiciosPage() {
       description="Visualiza y conoce en detalle los servicios que ofrece el fotógrafo principal (cobertura fotográfica, catering, música, decoración, etc.) para armar tu paquete ideal."
       requiredEndpoints={[
         'GET /api/services (Obtener catálogo completo)',
-        'GET /api/services/:id (Ver detalle del servicio)'
+        'GET /api/services/:id (Ver detalle del servicio)',
       ]}
     />
   );

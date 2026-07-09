@@ -41,7 +41,7 @@ export default function Showcase() {
   };
 
   const handleAlertClose = (key) => {
-    setShowAlerts(prev => ({ ...prev, [key]: false }));
+    setShowAlerts((prev) => ({ ...prev, [key]: false }));
   };
 
   const resetAlerts = () => {
@@ -50,13 +50,15 @@ export default function Showcase() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12 font-sans space-y-16">
-      
       {/* Page Title */}
       <div className="border-b border-zinc-200/60 dark:border-zinc-800/60 pb-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight">Showcase de Componentes UI</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight">
+            Showcase de Componentes UI
+          </h1>
           <p className="text-zinc-500 dark:text-zinc-400 mt-1 text-sm">
-            Librería de componentes responsivos, accesibles y adaptados a modo oscuro para Eventos JR.
+            Librería de componentes responsivos, accesibles y adaptados a modo
+            oscuro para Eventos JR.
           </p>
         </div>
         <div className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-3 py-1.5 rounded-full border border-zinc-200/50 dark:border-zinc-800/50">
@@ -66,12 +68,19 @@ export default function Showcase() {
 
       {/* 1. BUTTONS SECTION */}
       <section className="space-y-6">
-        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">1. Botones (Button)</h2>
-        <Card title="Variantes y Tamaños de Botón" subtitle="Diferentes estilos visuales e interacciones.">
+        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">
+          1. Botones (Button)
+        </h2>
+        <Card
+          title="Variantes y Tamaños de Botón"
+          subtitle="Diferentes estilos visuales e interacciones."
+        >
           <div className="space-y-6">
             {/* Variants */}
             <div>
-              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">Variantes</h4>
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+                Variantes
+              </h4>
               <div className="flex flex-wrap gap-3 items-center">
                 <Button variant="primary">Primary</Button>
                 <Button variant="secondary">Secondary</Button>
@@ -83,7 +92,9 @@ export default function Showcase() {
 
             {/* Sizes */}
             <div>
-              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">Tamaños</h4>
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+                Tamaños
+              </h4>
               <div className="flex flex-wrap gap-3 items-end">
                 <Button size="sm">Pequeño (sm)</Button>
                 <Button size="md">Mediano (md)</Button>
@@ -93,15 +104,34 @@ export default function Showcase() {
 
             {/* States */}
             <div>
-              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">Estados</h4>
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+                Estados
+              </h4>
               <div className="flex flex-wrap gap-3 items-center">
-                <Button loading variant="primary">Guardando</Button>
-                <Button loading variant="outline">Procesando</Button>
-                <Button disabled variant="primary">Deshabilitado</Button>
+                <Button loading variant="primary">
+                  Guardando
+                </Button>
+                <Button loading variant="outline">
+                  Procesando
+                </Button>
+                <Button disabled variant="primary">
+                  Deshabilitado
+                </Button>
                 <Button
                   icon={
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="w-4 h-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
+                      />
                     </svg>
                   }
                 >
@@ -115,8 +145,13 @@ export default function Showcase() {
 
       {/* 2. INPUTS SECTION */}
       <section className="space-y-6">
-        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">2. Inputs</h2>
-        <Card title="Entradas de Texto (Input)" subtitle="Componentes de formulario con validación y estados.">
+        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">
+          2. Inputs
+        </h2>
+        <Card
+          title="Entradas de Texto (Input)"
+          subtitle="Componentes de formulario con validación y estados."
+        >
           <div className="grid md:grid-cols-2 gap-6">
             <Input
               label="Nombre Completo"
@@ -125,22 +160,37 @@ export default function Showcase() {
               onChange={(e) => setTextVal(e.target.value)}
               required
             />
-            
+
             <Input
               label="Correo con Error"
               type="email"
               placeholder="incompleto@"
               value="correo-incorrecto"
               error={errorVal}
-              onChange={(e) => setErrorVal(e.target.value ? '' : 'Este campo no puede estar vacío')}
+              onChange={(e) =>
+                setErrorVal(
+                  e.target.value ? '' : 'Este campo no puede estar vacío'
+                )
+              }
             />
 
             <Input
               label="Búsqueda con Icono"
               placeholder="Buscar fotógrafo..."
               icon={
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m21-21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.602 10.602Z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m21-21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.602 10.602Z"
+                  />
                 </svg>
               }
             />
@@ -157,8 +207,13 @@ export default function Showcase() {
 
       {/* 3. SELECT SECTION */}
       <section className="space-y-6">
-        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">3. Selector (Select)</h2>
-        <Card title="Componente Select" subtitle="Lista desplegable responsiva con opciones dinámicas.">
+        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">
+          3. Selector (Select)
+        </h2>
+        <Card
+          title="Componente Select"
+          subtitle="Lista desplegable responsiva con opciones dinámicas."
+        >
           <div className="grid md:grid-cols-2 gap-6">
             <Select
               label="Rol de Usuario"
@@ -167,11 +222,11 @@ export default function Showcase() {
               options={[
                 { value: 'cliente', label: 'Cliente de Eventos' },
                 { value: 'fotografo', label: 'Fotógrafo Profesional' },
-                { value: 'admin', label: 'Administrador del Portal' }
+                { value: 'admin', label: 'Administrador del Portal' },
               ]}
               required
             />
-            
+
             <Select
               label="Select Deshabilitado"
               value="1"
@@ -184,33 +239,45 @@ export default function Showcase() {
 
       {/* 4. CARDS SECTION */}
       <section className="space-y-6">
-        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">4. Tarjetas (Card)</h2>
+        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">
+          4. Tarjetas (Card)
+        </h2>
         <div className="grid md:grid-cols-3 gap-6">
           <Card title="Tarjeta Básica" subtitle="Sin pie de página">
             <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-              Esta es una tarjeta simple. Contiene un encabezado con título, un subtítulo descriptivo y este bloque de cuerpo para tu contenido.
+              Esta es una tarjeta simple. Contiene un encabezado con título, un
+              subtítulo descriptivo y este bloque de cuerpo para tu contenido.
             </p>
           </Card>
 
-          <Card 
-            title="Tarjeta Completa" 
+          <Card
+            title="Tarjeta Completa"
             subtitle="Con slots extras"
             headerExtra={<Badge variant="success">Activo</Badge>}
             footer={
               <div className="flex justify-between items-center text-xs">
                 <span className="text-zinc-400">Actualizado ayer</span>
-                <Button variant="link" size="sm">Ver más</Button>
+                <Button variant="link" size="sm">
+                  Ver más
+                </Button>
               </div>
             }
           >
             <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-              Esta tarjeta demuestra el uso del slot `headerExtra` a la derecha del título, y un pie de página (`footer`) con estilo integrado.
+              Esta tarjeta demuestra el uso del slot `headerExtra` a la derecha
+              del título, y un pie de página (`footer`) con estilo integrado.
             </p>
           </Card>
 
-          <Card title="Tarjeta Hoverable" subtitle="Efecto de elevación interactivo" hoverable>
+          <Card
+            title="Tarjeta Hoverable"
+            subtitle="Efecto de elevación interactivo"
+            hoverable
+          >
             <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-              Pasa el cursor sobre esta tarjeta para ver cómo se eleva suavemente y realza su borde. Ideal para elementos interactivos o menús.
+              Pasa el cursor sobre esta tarjeta para ver cómo se eleva
+              suavemente y realza su borde. Ideal para elementos interactivos o
+              menús.
             </p>
           </Card>
         </div>
@@ -218,12 +285,23 @@ export default function Showcase() {
 
       {/* 5. MODALS SECTION */}
       <section className="space-y-6">
-        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">5. Ventanas Modales (Modal)</h2>
-        <Card title="Modales Interactivos" subtitle="Diálogos con overlay y cierres configurables. Habilitado cierre con tecla Escape y clic afuera.">
+        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">
+          5. Ventanas Modales (Modal)
+        </h2>
+        <Card
+          title="Modales Interactivos"
+          subtitle="Diálogos con overlay y cierres configurables. Habilitado cierre con tecla Escape y clic afuera."
+        >
           <div className="flex flex-wrap gap-4">
-            <Button onClick={() => openModal('sm')} variant="outline">Modal Chico (sm)</Button>
-            <Button onClick={() => openModal('md')} variant="outline">Modal Mediano (md)</Button>
-            <Button onClick={() => openModal('lg')} variant="outline">Modal Grande (lg)</Button>
+            <Button onClick={() => openModal('sm')} variant="outline">
+              Modal Chico (sm)
+            </Button>
+            <Button onClick={() => openModal('md')} variant="outline">
+              Modal Mediano (md)
+            </Button>
+            <Button onClick={() => openModal('lg')} variant="outline">
+              Modal Grande (lg)
+            </Button>
           </div>
         </Card>
 
@@ -235,15 +313,25 @@ export default function Showcase() {
           size={modalSize}
           footer={
             <>
-              <Button variant="outline" onClick={() => setModalOpen(false)}>Cancelar</Button>
-              <Button variant="primary" onClick={() => setModalOpen(false)}>Aceptar</Button>
+              <Button variant="outline" onClick={() => setModalOpen(false)}>
+                Cancelar
+              </Button>
+              <Button variant="primary" onClick={() => setModalOpen(false)}>
+                Aceptar
+              </Button>
             </>
           }
         >
           <div className="space-y-3">
-            <p>Este es el cuerpo del modal renderizado de forma dinámica en tamaño <strong>{modalSize}</strong>.</p>
+            <p>
+              Este es el cuerpo del modal renderizado de forma dinámica en
+              tamaño <strong>{modalSize}</strong>.
+            </p>
             <p className="text-zinc-500 text-xs">
-              Puedes cerrar esta ventana haciendo clic en los botones del pie de página, presionando la tecla <strong>ESC</strong>, haciendo clic en el icono "X" superior, o haciendo clic sobre el fondo translúcido (overlay).
+              Puedes cerrar esta ventana haciendo clic en los botones del pie de
+              página, presionando la tecla <strong>ESC</strong>, haciendo clic
+              en el icono "X" superior, o haciendo clic sobre el fondo
+              translúcido (overlay).
             </p>
           </div>
         </Modal>
@@ -252,8 +340,12 @@ export default function Showcase() {
       {/* 6. ALERTS SECTION */}
       <section className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">6. Alertas (Alert)</h2>
-          <Button variant="link" size="sm" onClick={resetAlerts}>Restaurar Alertas</Button>
+          <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">
+            6. Alertas (Alert)
+          </h2>
+          <Button variant="link" size="sm" onClick={resetAlerts}>
+            Restaurar Alertas
+          </Button>
         </div>
         <div className="space-y-4">
           {showAlerts.success && (
@@ -293,11 +385,18 @@ export default function Showcase() {
 
       {/* 7. BADGES SECTION */}
       <section className="space-y-6">
-        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">7. Etiquetas (Badge)</h2>
-        <Card title="Estados en Badges" subtitle="Píldoras de colores para indicar estados o categorías.">
+        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">
+          7. Etiquetas (Badge)
+        </h2>
+        <Card
+          title="Estados en Badges"
+          subtitle="Píldoras de colores para indicar estados o categorías."
+        >
           <div className="space-y-4">
             <div>
-              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">Variantes de Estado</h4>
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+                Variantes de Estado
+              </h4>
               <div className="flex flex-wrap gap-3">
                 <Badge variant="primary">Primary</Badge>
                 <Badge variant="secondary">Secondary</Badge>
@@ -309,10 +408,16 @@ export default function Showcase() {
               </div>
             </div>
             <div>
-              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">Tamaños</h4>
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+                Tamaños
+              </h4>
               <div className="flex flex-wrap gap-3 items-center">
-                <Badge variant="success" size="sm">Pequeño (sm)</Badge>
-                <Badge variant="success" size="md">Mediano (md)</Badge>
+                <Badge variant="success" size="sm">
+                  Pequeño (sm)
+                </Badge>
+                <Badge variant="success" size="md">
+                  Mediano (md)
+                </Badge>
               </div>
             </div>
           </div>
@@ -321,8 +426,13 @@ export default function Showcase() {
 
       {/* 8. SPINNERS SECTION */}
       <section className="space-y-6">
-        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">8. Indicadores de Carga (Spinner)</h2>
-        <Card title="Spinner SVG Animado" subtitle="Diferentes tamaños y colores para cargas asíncronas.">
+        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">
+          8. Indicadores de Carga (Spinner)
+        </h2>
+        <Card
+          title="Spinner SVG Animado"
+          subtitle="Diferentes tamaños y colores para cargas asíncronas."
+        >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="p-4 rounded-xl border border-zinc-100 dark:border-zinc-800 flex flex-col items-center gap-2 justify-center">
               <Spinner size="sm" />
@@ -346,11 +456,18 @@ export default function Showcase() {
 
       {/* 9. PAGINATION SECTION */}
       <section className="space-y-6">
-        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">9. Paginación (Pagination)</h2>
-        <Card title="Paginación Interactiva" subtitle={`Visualización de páginas. Página seleccionada actualmente: ${currentPage}`}>
+        <h2 className="text-xl font-bold tracking-tight border-l-4 border-primary pl-3">
+          9. Paginación (Pagination)
+        </h2>
+        <Card
+          title="Paginación Interactiva"
+          subtitle={`Visualización de páginas. Página seleccionada actualmente: ${currentPage}`}
+        >
           <div className="space-y-6">
             <div>
-              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2 text-center">Paginador con Ventana (Total: 10 páginas)</h4>
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2 text-center">
+                Paginador con Ventana (Total: 10 páginas)
+              </h4>
               <Pagination
                 currentPage={currentPage}
                 totalPages={10}
@@ -358,7 +475,9 @@ export default function Showcase() {
               />
             </div>
             <div className="border-t border-zinc-100 dark:border-zinc-800 pt-6">
-              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2 text-center">Paginador Chico (Total: 3 páginas)</h4>
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2 text-center">
+                Paginador Chico (Total: 3 páginas)
+              </h4>
               <Pagination
                 currentPage={currentPage > 3 ? 3 : currentPage}
                 totalPages={3}
@@ -368,7 +487,6 @@ export default function Showcase() {
           </div>
         </Card>
       </section>
-
     </div>
   );
 }

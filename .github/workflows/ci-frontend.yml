@@ -1,0 +1,33 @@
+name: CI Frontend Eventos JR
+
+on:
+  pull_request:
+    branches:
+      - main
+      - desarrollo
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Check code formatting (Prettier)
+        run: npm run format:check
+
+      - name: Run code linter (ESLint)
+        run: npm run lint
+
+      - name: Build production bundle
+        run: npm run build

@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * Reusable Card Component with header, body and footer slots
- * 
+ *
  * @param {Object} props
  * @param {React.ReactNode} [props.title] - Card header title text or node
  * @param {React.ReactNode} [props.subtitle] - Card header subtitle text or node
@@ -27,7 +27,9 @@ export default function Card({
   return (
     <div
       className={`rounded-2xl border border-zinc-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl shadow-lg transition-all duration-300 ${
-        hoverable ? 'hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 hover:border-zinc-300 dark:hover:border-zinc-700/80' : ''
+        hoverable
+          ? 'hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 hover:border-zinc-300 dark:hover:border-zinc-700/80'
+          : ''
       } ${className}`}
       {...props}
     >

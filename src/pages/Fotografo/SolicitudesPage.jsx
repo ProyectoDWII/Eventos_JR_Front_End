@@ -12,7 +12,7 @@ export default function SolicitudesPage() {
       requiredEndpoints={[
         'GET /api/admin/applications (Ver todas las solicitudes del sistema)',
         'PATCH /api/admin/applications/:id/status (Aprobar o rechazar solicitud de fecha)',
-        'POST /api/admin/contracts (Generar contrato asociado a la reserva aprobada)'
+        'POST /api/admin/contracts (Generar contrato asociado a la reserva aprobada)',
       ]}
     />
   );

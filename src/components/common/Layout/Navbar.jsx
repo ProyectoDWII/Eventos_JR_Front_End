@@ -15,9 +15,10 @@ export default function Navbar({ onMenuToggle }) {
   const [profileOpen, setProfileOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const isDashboard = location.pathname.startsWith('/cliente') || 
-                      location.pathname.startsWith('/fotografo') || 
-                      location.pathname.startsWith('/admin');
+  const isDashboard =
+    location.pathname.startsWith('/cliente') ||
+    location.pathname.startsWith('/fotografo') ||
+    location.pathname.startsWith('/admin');
 
   const handleLogout = () => {
     logoutUser();
@@ -75,7 +76,6 @@ export default function Navbar({ onMenuToggle }) {
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-zinc-200/50 dark:border-zinc-800/50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md transition-colors duration-300 h-16">
       <div className="max-w-7xl mx-auto h-full px-6 flex items-center justify-between">
-        
         {/* Left Section */}
         <div className="flex items-center gap-4">
           {/* Hamburger button (visible on dashboard in mobile only) */}
@@ -85,8 +85,19 @@ export default function Navbar({ onMenuToggle }) {
               className="lg:hidden p-2 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               aria-label="Abrir Menú"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
               </svg>
             </button>
           )}
@@ -98,8 +109,19 @@ export default function Navbar({ onMenuToggle }) {
               className="md:hidden p-2 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               aria-label="Abrir Menú de Navegación"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.75 6.75h14.5M4.75 12h14.5m-14.5 5.25h14.5" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4.75 6.75h14.5M4.75 12h14.5m-14.5 5.25h14.5"
+                />
               </svg>
             </button>
           )}
@@ -124,16 +146,35 @@ export default function Navbar({ onMenuToggle }) {
         {/* Center / Navigation Links (Public View only) */}
         {!isDashboard && (
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-300">
-            <button onClick={() => handleNavClick('hero')} className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer">Inicio</button>
-            <button onClick={() => handleNavClick('servicios')} className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer">Servicios</button>
-            <button onClick={() => handleNavClick('testimonios')} className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer">Testimonios</button>
-            <button onClick={() => handleNavClick('contacto')} className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer">Contacto</button>
+            <button
+              onClick={() => handleNavClick('hero')}
+              className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer"
+            >
+              Inicio
+            </button>
+            <button
+              onClick={() => handleNavClick('servicios')}
+              className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer"
+            >
+              Servicios
+            </button>
+            <button
+              onClick={() => handleNavClick('testimonios')}
+              className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer"
+            >
+              Testimonios
+            </button>
+            <button
+              onClick={() => handleNavClick('contacto')}
+              className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer"
+            >
+              Contacto
+            </button>
           </div>
         )}
 
         {/* Right Section / Actions */}
         <div className="flex items-center gap-4">
-          
           {/* Dark Mode Toggle */}
           <button
             onClick={toggleTheme}
@@ -141,12 +182,34 @@ export default function Navbar({ onMenuToggle }) {
             aria-label="Alternar Tema"
           >
             {theme === 'dark' ? (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                />
               </svg>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
+                />
               </svg>
             )}
           </button>
@@ -165,21 +228,41 @@ export default function Navbar({ onMenuToggle }) {
                 <span className="hidden sm:block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
                   {authState.user?.name}
                 </span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3 h-3 text-zinc-400">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2.5}
+                  stroke="currentColor"
+                  className="w-3 h-3 text-zinc-400"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
                 </svg>
               </button>
 
               {/* Profile Dropdown */}
               {profileOpen && (
                 <>
-                  <div className="fixed inset-0 z-10" onClick={() => setProfileOpen(false)}></div>
-                  
+                  <div
+                    className="fixed inset-0 z-10"
+                    onClick={() => setProfileOpen(false)}
+                  ></div>
+
                   <div className="absolute right-0 mt-2 w-52 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-zinc-900 p-2 shadow-2xl z-20 animate-in fade-in slide-in-from-top-2">
                     <div className="px-3 py-2.5 border-b border-zinc-100 dark:border-zinc-800/60">
-                      <p className="text-xs font-semibold text-zinc-400">Sesión iniciada</p>
-                      <p className="text-sm font-bold truncate mt-0.5">{authState.user?.name}</p>
-                      <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mt-1.5 ${getRoleBadgeClass(authState.user?.role)}`}>
+                      <p className="text-xs font-semibold text-zinc-400">
+                        Sesión iniciada
+                      </p>
+                      <p className="text-sm font-bold truncate mt-0.5">
+                        {authState.user?.name}
+                      </p>
+                      <span
+                        className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mt-1.5 ${getRoleBadgeClass(authState.user?.role)}`}
+                      >
                         {getRoleLabel(authState.user?.role)}
                       </span>
                     </div>
@@ -220,35 +303,37 @@ export default function Navbar({ onMenuToggle }) {
               </Link>
             </div>
           )}
-
         </div>
       </div>
 
       {/* Mobile Navigation Dropdown Menu (Public View only) */}
       {!isDashboard && mobileMenuOpen && (
         <>
-          <div className="fixed inset-0 top-16 z-30 bg-zinc-950/20 dark:bg-zinc-950/50" onClick={() => setMobileMenuOpen(false)}></div>
+          <div
+            className="fixed inset-0 top-16 z-30 bg-zinc-950/20 dark:bg-zinc-950/50"
+            onClick={() => setMobileMenuOpen(false)}
+          ></div>
           <div className="absolute top-16 left-0 right-0 z-40 bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-850 p-4 space-y-2 animate-in slide-in-from-top duration-200">
-            <button 
-              onClick={() => handleNavClick('hero')} 
+            <button
+              onClick={() => handleNavClick('hero')}
               className="block w-full text-left px-3 py-2 rounded-xl text-sm font-semibold text-zinc-700 hover:text-indigo-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:text-indigo-400 dark:hover:bg-zinc-900 transition"
             >
               Inicio
             </button>
-            <button 
-              onClick={() => handleNavClick('servicios')} 
+            <button
+              onClick={() => handleNavClick('servicios')}
               className="block w-full text-left px-3 py-2 rounded-xl text-sm font-semibold text-zinc-700 hover:text-indigo-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:text-indigo-400 dark:hover:bg-zinc-900 transition"
             >
               Servicios
             </button>
-            <button 
-              onClick={() => handleNavClick('testimonios')} 
+            <button
+              onClick={() => handleNavClick('testimonios')}
               className="block w-full text-left px-3 py-2 rounded-xl text-sm font-semibold text-zinc-700 hover:text-indigo-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:text-indigo-400 dark:hover:bg-zinc-900 transition"
             >
               Testimonios
             </button>
-            <button 
-              onClick={() => handleNavClick('contacto')} 
+            <button
+              onClick={() => handleNavClick('contacto')}
               className="block w-full text-left px-3 py-2 rounded-xl text-sm font-semibold text-zinc-700 hover:text-indigo-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:text-indigo-400 dark:hover:bg-zinc-900 transition"
             >
               Contacto

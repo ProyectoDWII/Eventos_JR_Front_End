@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
  */
 export default function useDebounce() {
   const [value, setValue] = useState(null);
-  
+
   useEffect(() => {
     // Custom hook setup logic
     console.log('useDebounce initialized');

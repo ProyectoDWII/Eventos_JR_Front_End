@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
  */
 export default function useAuth() {
   const [value, setValue] = useState(null);
-  
+
   useEffect(() => {
     // Custom hook setup logic
     console.log('useAuth initialized');
