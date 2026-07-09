@@ -11,12 +11,12 @@ export function AuthContextProvider({ children }) {
   const [state, setState] = useState(() => {
     const userJson = localStorage.getItem('user');
 
+    if (userJson) {
       try {
         const user = JSON.parse(userJson);
         return {
           isAuthenticated: true,
           user,
-          token,
           loading: false,
         };
       } catch (e) {
@@ -27,7 +27,6 @@ export function AuthContextProvider({ children }) {
     return {
       isAuthenticated: false,
       user: null,
-      token: null,
       loading: false,
     };
   });
@@ -43,7 +42,7 @@ export function AuthContextProvider({ children }) {
           console.warn(
             'Sesión expirada o token inválido en servidor, cerrando sesión.'
           );
-     
+
           logoutUser();
         }
       }
@@ -57,7 +56,7 @@ export function AuthContextProvider({ children }) {
     try {
       const response = await authService.login({ email, password });
       const { user } = response;
-      
+
       // Mapeamos los roles del backend a los roles del frontend:
       // 'client' -> 'cliente'
       // 'admin'  -> 'fotografo' (El administrador del sistema es el fotógrafo)
@@ -78,7 +77,7 @@ export function AuthContextProvider({ children }) {
       setState({
         isAuthenticated: true,
         user: frontendUser,
-        loading: false
+        loading: false,
       });
 
       return frontendUser;
@@ -114,7 +113,7 @@ export function AuthContextProvider({ children }) {
       setState({
         isAuthenticated: true,
         user: frontendUser,
-        loading: false
+        loading: false,
       });
 
       return frontendUser;
@@ -124,20 +123,20 @@ export function AuthContextProvider({ children }) {
     }
   };
 
-  const logoutUser = async () => {
+  async function logoutUser() {
     try {
       // Llamamos al servicio de logout para limpiar la cookie del backend
       await authService.logout();
     } catch (e) {
       console.warn('Error llamando a logout en servidor:', e);
     }
-    
+
     // Limpiamos los datos locales en el cliente
     localStorage.removeItem('user');
     setState({
       isAuthenticated: false,
       user: null,
-      loading: false
+      loading: false,
     });
   }
 
