@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 import { useAuth } from '../../context/AuthContext';
 import AvisoPrivacidad from '../common/Privacy/AvisoPrivacidad';
 
@@ -22,24 +23,36 @@ export default function RegisterForm() {
     e.preventDefault();
     const newErrors = {};
 
-    if (!nombre.trim()) {
+    // Sanitización preventiva contra XSS
+    const sanitizedNombre = DOMPurify.sanitize(nombre);
+    const sanitizedEmail = DOMPurify.sanitize(email);
+    const sanitizedPhone = DOMPurify.sanitize(phoneNumber);
+    const sanitizedPassword = DOMPurify.sanitize(password);
+
+    if (!sanitizedNombre.trim()) {
       newErrors.nombre = 'El nombre completo es requerido.';
     }
 
-    if (!email) {
+    if (!sanitizedEmail) {
       newErrors.email = 'El correo electrónico es requerido.';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+    } else if (!/\S+@\S+\.\S+/.test(sanitizedEmail)) {
       newErrors.email = 'El formato del correo es inválido.';
     }
 
-    if (!password) {
+    if (!sanitizedPassword) {
       newErrors.password = 'La contraseña es requerida.';
-    } else if (password.length < 6) {
-      newErrors.password = 'La contraseña debe tener al menos 6 caracteres.';
+    } else if (sanitizedPassword.length < 8) {
+      newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
+    } else if (sanitizedPassword.length > 128) {
+      newErrors.password = 'La contraseña no puede exceder los 128 caracteres.';
     }
 
-    if (password !== confirmPassword) {
+    if (sanitizedPassword !== DOMPurify.sanitize(confirmPassword)) {
       newErrors.confirmPassword = 'Las contraseñas no coinciden.';
+    }
+
+    if (sanitizedPhone.trim() && !/^\d{10}$/.test(sanitizedPhone.replace(/\s+/g, ''))) {
+      newErrors.phoneNumber = 'El teléfono debe contener exactamente 10 dígitos.';
     }
 
     // Critical block: check if privacy consent checkbox is checked
@@ -57,11 +70,11 @@ export default function RegisterForm() {
 
     try {
       const user = await registerUser({
-        name: nombre,
-        email,
-        password,
+        name: sanitizedNombre,
+        email: sanitizedEmail,
+        password: sanitizedPassword,
         role: rol,
-        phoneNumber
+        phoneNumber: sanitizedPhone
       });
       setLoading(false);
       navigate(`/${user.role}/dashboard`);
@@ -154,8 +167,15 @@ export default function RegisterForm() {
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
             placeholder="5512345678"
-            className="w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-100 border-zinc-250 dark:border-zinc-750 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-150"
+            className={`w-full px-4 py-2 rounded-xl border bg-zinc-50/50 dark:bg-zinc-850/50 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:outline-none transition duration-150 ${
+              errors.phoneNumber 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-zinc-250 dark:border-zinc-750 focus:ring-indigo-500'
+            }`}
           />
+          {errors.phoneNumber && (
+            <p className="text-xs text-red-655 dark:text-red-400 mt-1 font-medium">{errors.phoneNumber}</p>
+          )}
         </div>
 
         {/* Role Selector */}
