@@ -55,7 +55,12 @@ export function AuthContextProvider({ children }) {
     setState((prev) => ({ ...prev, loading: true }));
     try {
       const response = await authService.login({ email, password });
-      const { user } = response;
+      const user = response.user || response.data;
+      const token = response.token;
+
+      if (!user) {
+        throw new Error('No se recibieron datos de usuario del servidor');
+      }
 
       // Mapeamos los roles del backend a los roles del frontend:
       // 'client' -> 'cliente'
@@ -73,6 +78,9 @@ export function AuthContextProvider({ children }) {
       };
 
       localStorage.setItem('user', JSON.stringify(frontendUser));
+      if (token) {
+        localStorage.setItem('token', token);
+      }
 
       setState({
         isAuthenticated: true,
@@ -91,7 +99,12 @@ export function AuthContextProvider({ children }) {
     setState((prev) => ({ ...prev, loading: true }));
     try {
       const response = await authService.register(userData);
-      const { user } = response;
+      const user = response.user || response.data;
+      const token = response.token;
+
+      if (!user) {
+        throw new Error('No se recibieron datos de usuario del servidor');
+      }
 
       // Mapeamos los roles del backend a los roles del frontend:
       // 'client' -> 'cliente'
@@ -109,6 +122,9 @@ export function AuthContextProvider({ children }) {
       };
 
       localStorage.setItem('user', JSON.stringify(frontendUser));
+      if (token) {
+        localStorage.setItem('token', token);
+      }
 
       setState({
         isAuthenticated: true,
@@ -133,6 +149,7 @@ export function AuthContextProvider({ children }) {
 
     // Limpiamos los datos locales en el cliente
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     setState({
       isAuthenticated: false,
       user: null,
